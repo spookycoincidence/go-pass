@@ -1,4 +1,4 @@
-# go-password-enhanced
+# GO password generator
 
 Generador de contraseñas en Go.  
 ---
