@@ -1,83 +1,60 @@
-## Golang Password Generator
+# go-password-enhanced
 
-[![GoDoc](https://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://pkg.go.dev/github.com/sethvargo/go-password/password)
-[![GitHub Actions](https://img.shields.io/github/workflow/status/sethvargo/go-password/Test?style=flat-square)](https://github.com/sethvargo/go-password/actions?query=workflow%3ATest)
+Generador de contraseñas en Go.  
+---
 
-This library implements generation of random passwords with provided
-requirements as described by  [AgileBits
-1Password](https://discussions.agilebits.com/discussion/23842/how-random-are-the-generated-passwords)
-in pure Golang. The algorithm is commonly used when generating website
-passwords.
+## 🚀 Características
 
-The library uses crypto/rand for added randomness.
+- Generación de contraseñas con:
+  - Longitud configurable
+  - Cantidad de dígitos y símbolos
+  - Opción de desactivar mayúsculas
+  - Permitir o no caracteres repetidos
+- 🔁 Generación de múltiples contraseñas en un solo comando con el flag `-count`.
+- Implementado en **Golang** con código limpio y modular.
 
-Sample example passwords this library may generate:
+---
 
-```text
-0N[k9PhDqmmfaO`p_XHjVv`HTq|zsH4XiH8umjg9JAGJ#\Qm6lZ,28XF4{X?3sHj
-7@90|0H7!4p\,c<!32:)0.9N
-UlYuRtgqyWEivlXnLeBpZvIQ
-Q795Im1VR5h363s48oZGaLDa
-wpvbxlsc
+## ⚙️ Instalación
+
+Cloná el repositorio:
+
+```bash
+git clone https://github.com/spookycoincidence/go-password-enhanced.git
+cd go-password-enhanced
+go mod tidy
 ```
 
-> Since these are completely randomized, it's possible that they may generate passwords that don't comply with some custom password policies, such as ones that require both upper case AND lower case letters. If your particular use case needs a mix of casing, then you can either increase the number of characters in the password or check the output and regenerate if it fails a particular constraint, such as requiring both upper and lower case.
+## 🛠️ Uso
+Generá contraseñas ejecutando:
 
-## Installation
-
-```sh
-$ go get -u github.com/sethvargo/go-password/password
+```bash
+go run main.go [flags]
 ```
 
-## Usage
+## 🔧 Flags disponibles:
 
-```golang
-package main
+-length	   Longitud total de la contraseña	  16
+-digits	   Cantidad de dígitos numéricos	    4
+-symbols	 Cantidad de símbolos	              2
+-no-upper	 Desactiva el uso de mayúsculas	    false
+-repeat	   Permite caracteres repetidos	      false
+-count	   Cantidad de contraseñas a generar	1
 
-import (
-  "log"
 
-  "github.com/sethvargo/go-password/password"
-)
-
-func main() {
-  // Generate a password that is 64 characters long with 10 digits, 10 symbols,
-  // allowing upper and lower case letters, disallowing repeat characters.
-  res, err := password.Generate(64, 10, 10, false, false)
-  if err != nil {
-    log.Fatal(err)
-  }
-  log.Printf(res)
-}
+📌 Ejemplo:
+```bash
+go run main.go -length=12 -digits=3 -symbols=1 -count=5
 ```
 
-See the [GoDoc](https://godoc.org/github.com/sethvargo/go-password) for more
-information.
+Esto generará 5 contraseñas de 12 caracteres cada una, con 3 dígitos, 1 símbolo.
 
-## Testing
+## 🚀 Deploy en Railway
+Podés desplegar este CLI como un servicio en Railway o cualquier entorno que soporte Go, o bien extenderlo a una API para consumir por HTTP.
 
-For testing purposes, instead of accepted a `*password.Generator` struct, accept
-a `password.PasswordGenerator` interface:
+🏷 Créditos
+Basado en la librería oficial:
+👉 sethvargo/go-password
 
-```go
-// func MyFunc(p *password.Generator)
-func MyFunc(p password.PasswordGenerator) {
-  // ...
-}
-```
 
-Then, in tests, use a mocked password generator with stubbed data:
-
-```go
-func TestMyFunc(t *testing.T) {
-  gen := password.NewMockGenerator("canned-response", false)
-  MyFunc(gen)
-}
-```
-
-In this example, the mock generator will always return the value
-"canned-response", regardless of the provided parameters.
-
-## License
-
-This code is licensed under the MIT license.
+## Desarrollado con ❤️ por spookycoincidence
